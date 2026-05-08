@@ -25,13 +25,14 @@ Execute the command:
 flutter pub get
 ```
 
-> TAG Naming Convention: `original-version-ohos-version-betax`. For changes between different TAGs, please refer to CHANGELOG.md.
+> TAG Naming Convention: `original-version-ohos-version-betax`. 
 
-| Flutter Framework Version | TAG Name | Remarks |
-| ------------------------- | -------- | ------- |
-| 3.7                       | 1.1.1-ohos-1.0.0| |
-| 3.22                      | 1.1.1-ohos-1.0.0 | |
-| 3.27                      | 1.1.1-ohos-1.0.0 | |
+| Flutter Framework Version | TAG Name |
+| ---------------- | ----------------------- |
+| 3.7.12-ohos-1.1.3 | 1.1.1-ohos-1.0.0 |
+| 3.22.1-ohos-1.1.0 | 1.1.1-ohos-1.0.0 |
+| 3.27.5-ohos-1.0.4 | 1.1.1-ohos-1.0.0 |
+| 3.35.8-ohos-0.0.2 | 1.1.1-ohos-1.0.0 |
 
 ## Constraints and Limitations
 
@@ -39,9 +40,10 @@ flutter pub get
 
 Tested and verified on the following versions:
 
-- Flutter: 3.7.12-ohos-1.1.3; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.0.0.130 SP25;
-- Flutter: 3.22.1-ohos-1.1.0; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.0.0.130 SP25;
-- Flutter: 3.27.5-ohos-1.0.4; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.0.0.130 SP25;
+1. Flutter: 3.7.12-ohos-1.1.3; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.1.0.117 SP6;
+2. Flutter: 3.22.1-ohos-1.1.0; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.1.0.117 SP6;
+3. Flutter: 3.27.5-ohos-1.0.4; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.1.0.117 SP6;
+4. Flutter: 3.35.8-ohos-0.0.2; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.1.0.117 SP6; 
 
 ### Permission Requirements
 
