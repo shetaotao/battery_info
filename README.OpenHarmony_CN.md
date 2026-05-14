@@ -28,7 +28,6 @@ flutter pub get
 
 | Flutter 框架版本 | TAG 名称 |
 | ---------------- | ----------------------- |
-| 3.7.12-ohos-1.1.3 | 1.1.1-ohos-1.0.0 |
 | 3.22.1-ohos-1.1.0 | 1.1.1-ohos-1.0.0 |
 | 3.27.5-ohos-1.0.4 | 1.1.1-ohos-1.0.0 |
 | 3.35.8-ohos-0.0.2 | 1.1.1-ohos-1.0.0 |
@@ -39,10 +38,9 @@ flutter pub get
 
 在以下版本中已测试通过：
 
-1. Flutter: 3.7.12-ohos-1.1.3; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.1.0.117 SP6;
-2. Flutter: 3.22.1-ohos-1.1.0; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.1.0.117 SP6;
-3. Flutter: 3.27.5-ohos-1.0.4; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.1.0.117 SP6;
-4. Flutter: 3.35.8-ohos-0.0.2; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.1.0.117 SP6; 
+1. Flutter: 3.22.1-ohos-1.1.0; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.1.0.117 SP6;
+2. Flutter: 3.27.5-ohos-1.0.4; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.1.0.117 SP6;
+3. Flutter: 3.35.8-ohos-0.0.2; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.1.0.117 SP6; 
 
 ### 权限要求
 
@@ -57,7 +55,7 @@ flutter pub get
 ```dart
 import 'package:flutter/material.dart';
 import 'package:battery_info/battery_info_plugin.dart';
-import 'package:battery_info/model/android_battery_info.dart';
+import 'package:battery_info/model/ohos_battery_info.dart';
 
 void main() {
   runApp(MyApp());
@@ -72,8 +70,8 @@ class MyApp extends StatelessWidget {
           title: const Text('Battery Info plugin example'),
         ),
         body: Center(
-          child: StreamBuilder<AndroidBatteryInfo?>(
-            stream: BatteryInfoPlugin().androidBatteryInfoStream,
+          child: StreamBuilder<OhosBatteryInfo?>(
+            stream: BatteryInfoPlugin().ohosBatteryInfoStream,
             builder: (context, snapshot) {
               final data = snapshot.data;
               if (snapshot.hasData && data != null) {
@@ -109,8 +107,8 @@ class MyApp extends StatelessWidget {
 | androidBatteryInfoStream() | 方法 | 无 | `Stream<AndroidBatteryInfo?>` | yes | 订阅 Android 风格电池信息流，持续接收更新 |
 | iosBatteryInfo() | 方法 | 无 | `Future<IosBatteryInfo?>` | yes | 单次获取 iOS 风格电池信息（电量、充电状态） |
 | iosBatteryInfoStream() | 方法 | 无 | `Stream<IosBatteryInfo?>` | yes | 订阅 iOS 风格电池信息流，持续接收更新 |
-
-**使用建议**：在 Android / OpenHarmony 平台，推荐使用 `androidBatteryInfo` 和 `androidBatteryInfoStream` 获取完整的电池信息字段；在 iOS 平台，推荐使用 `iosBatteryInfo` 和 `iosBatteryInfoStream`；对于只需要电量和充电状态的跨平台应用，可以使用 `IosBatteryInfo` 或仅读取 `batteryLevel` 和 `chargingStatus`。
+| ohosBatteryInfo() | 方法 | 无 | `Future<OhosBatteryInfo?>` | yes | 单次获取 OpenHarmony 电池信息（电量、健康、充电状态、电流、电压、温度等）|
+| ohosBatteryInfoStream() | 方法 | 无 | `Stream<OhosBatteryInfo?>` | yes | 订阅 OpenHarmony 电池信息流，持续接收更新 |
 
 ### AndroidBatteryInfo 数据模型
 
@@ -137,6 +135,25 @@ class MyApp extends StatelessWidget {
 |------|------|------|
 | batteryLevel | int? | 电池电量百分比 |
 | chargingStatus | ChargingStatus? | 充电状态（Charging/Discharging/Full/Unknown）|
+
+### OhosBatteryInfo 数据模型
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| batteryLevel | int? | 电池电量百分比 |
+| batteryCapacity | int? | 电池容量（mAh）|
+| chargingStatus | ChargingStatus? | 充电状态（Charging/Discharging/Full/Unknown）|
+| chargeTimeRemaining | int? | 充满剩余时间（毫秒）|
+| currentNow | int? | 当前电流（微安）|
+| currentAverage | int? | 平均电流（微安）|
+| health | String? | 电池健康状态 |
+| pluggedStatus | String? | 电源连接状态 |
+| present | bool? | 电池是否存在 |
+| remainingEnergy | int? | 剩余能量 |
+| scale | int? | 电量刻度 |
+| temperature | int? | 电池温度 |
+| technology | String? | 电池技术类型 |
+| voltage | int? | 电池电压（毫伏）|
 
 ## 遗留问题
 无

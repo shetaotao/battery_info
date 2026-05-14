@@ -61,6 +61,8 @@ export default class BatteryInfoPlugin implements FlutterPlugin, MethodCallHandl
   }
 
   // ---------- StreamHandler ----------
+  // 注意：鸿蒙 @ohos.batteryInfo API 暂未提供电池状态变化的事件监听机制
+  // 因此使用定时轮询方式实现流更新
   onListen(_args: Object, events: EventSink): void {
     this.eventSink = events;
     this.eventSink.success(this.buildBatteryInfoMap());
@@ -103,10 +105,9 @@ export default class BatteryInfoPlugin implements FlutterPlugin, MethodCallHandl
     const voltageUv = batteryInfo.voltage ?? 0;
     const voltageMv = voltageUv > 0 ? Math.floor(voltageUv / 1000) : -1;
 
-    // batteryTemperature：官方文档单位 0.1°C
-    const temperature = (batteryInfo.batteryTemperature !== undefined && batteryInfo.batteryTemperature !== null)
-      ? batteryInfo.batteryTemperature
-      : -1;
+    // batteryTemperature：官方文档单位 0.1°C，除以 10 转换为°C
+    const rawTemperature = batteryInfo.batteryTemperature ?? -1;
+    const temperature = rawTemperature > 0 ? Math.floor(rawTemperature / 10) : -1;
 
     // technology：官方文档为 string 类型
     const technology = (batteryInfo.technology !== undefined && batteryInfo.technology !== null)

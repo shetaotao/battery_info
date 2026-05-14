@@ -29,7 +29,6 @@ flutter pub get
 
 | Flutter Framework Version | TAG Name |
 | ---------------- | ----------------------- |
-| 3.7.12-ohos-1.1.3 | 1.1.1-ohos-1.0.0 |
 | 3.22.1-ohos-1.1.0 | 1.1.1-ohos-1.0.0 |
 | 3.27.5-ohos-1.0.4 | 1.1.1-ohos-1.0.0 |
 | 3.35.8-ohos-0.0.2 | 1.1.1-ohos-1.0.0 |
@@ -40,10 +39,9 @@ flutter pub get
 
 Tested and verified on the following versions:
 
-1. Flutter: 3.7.12-ohos-1.1.3; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.1.0.117 SP6;
-2. Flutter: 3.22.1-ohos-1.1.0; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.1.0.117 SP6;
-3. Flutter: 3.27.5-ohos-1.0.4; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.1.0.117 SP6;
-4. Flutter: 3.35.8-ohos-0.0.2; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.1.0.117 SP6; 
+1. Flutter: 3.22.1-ohos-1.1.0; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.1.0.117 SP6;
+2. Flutter: 3.27.5-ohos-1.0.4; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.1.0.117 SP6;
+3. Flutter: 3.35.8-ohos-0.0.2; SDK: 5.0.0(12); IDE: DevEco Studio: 6.1.0.830; ROM: 6.1.0.117 SP6; 
 
 ### Permission Requirements
 
@@ -73,8 +71,8 @@ class MyApp extends StatelessWidget {
           title: const Text('Battery Info plugin example'),
         ),
         body: Center(
-          child: StreamBuilder<AndroidBatteryInfo?>(
-            stream: BatteryInfoPlugin().androidBatteryInfoStream,
+          child: StreamBuilder<OhosBatteryInfo?>(
+            stream: BatteryInfoPlugin().ohosBatteryInfoStream,
             builder: (context, snapshot) {
               final data = snapshot.data;
               if (snapshot.hasData && data != null) {
@@ -110,8 +108,8 @@ class MyApp extends StatelessWidget {
 | androidBatteryInfoStream | getter | none | `Stream<AndroidBatteryInfo?>` | yes | Subscribe to Android-style battery information stream for continuous updates |
 | iosBatteryInfo | getter | none | `Future<IosBatteryInfo?>` | yes | Get iOS-style battery information once (level, charging status) |
 | iosBatteryInfoStream | getter | none | `Stream<IosBatteryInfo?>` | yes | Subscribe to iOS-style battery information stream for continuous updates |
-
-**Usage Recommendation**: On Android / OpenHarmony platforms, it is recommended to use `androidBatteryInfo` and `androidBatteryInfoStream` to get complete battery information fields; on iOS platform, it is recommended to use `iosBatteryInfo` and `iosBatteryInfoStream`; for cross-platform apps that only need battery level and charging status, you can use `IosBatteryInfo` or simply read `batteryLevel` and `chargingStatus`.
+| ohosBatteryInfo | getter | none | `Future<OhosBatteryInfo?>` | yes | Get OpenHarmony battery information once (level, health, charging status, current, voltage, temperature, etc.)|
+| ohosBatteryInfoStream | getter | none | `Stream<OhosBatteryInfo?>` | yes | Subscribe to OpenHarmony battery information stream for continuous updates |
 
 ### AndroidBatteryInfo Data Model
 
@@ -138,6 +136,26 @@ class MyApp extends StatelessWidget {
 |-------|------|-------------|
 | batteryLevel | int? | Battery level percentage |
 | chargingStatus | ChargingStatus? | Charging status (Charging/Discharging/Full/Unknown) |
+
+### OhosBatteryInfo Data Model
+
+| Field | Type | Description |
+|-------|------|-------------|
+| batteryLevel | int? | Battery level percentage |
+| batteryCapacity | int? | Battery capacity (mAh) |
+| chargingStatus | ChargingStatus? | Charging status (Charging/Discharging/Full/Unknown) |
+| chargeTimeRemaining | int? | Time remaining to full charge (milliseconds) |
+| currentNow | int? | Current now (microamperes) |
+| currentAverage | int? | Average current (microamperes) |
+| health | String? | Battery health status |
+| pluggedStatus | String? | Power connection status |
+| present | bool? | Whether battery is present |
+| remainingEnergy | int? | Remaining energy |
+| scale | int? | Battery scale |
+| temperature | int? | Battery temperature |
+| technology | String? | Battery technology type |
+| voltage | int? | Battery voltage (millivolts) |
+
 
 ## Known Issues
 None

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:battery_info/model/android_battery_info.dart';
 import 'package:battery_info/model/iso_battery_info.dart';
+import 'package:battery_info/model/ohos_battery_info.dart';
 import 'package:flutter/services.dart';
 
 /// Plugin for accessing the battery information of the device
@@ -20,12 +21,38 @@ class BatteryInfoPlugin {
     }
   }
 
-  /// Returns a stream of [BatteryInfo] data that is pushed out to the
+  /// Returns a stream of [AndroidBatteryInfo] data that is pushed out to the
   /// subscribers on updates
   Stream<AndroidBatteryInfo?> get androidBatteryInfoStream {
     return streamChannel.receiveBroadcastStream().map((data) {
       try {
         final converted = AndroidBatteryInfo.fromJson(Map.from(data));
+        return converted;
+      } on PlatformException catch (e) {
+        print(e.message);
+        return null;
+      }
+    });
+  }
+
+  /// Returns the battery info as a single API call
+  Future<OhosBatteryInfo?> get ohosBatteryInfo async {
+    try {
+      final batteryInfo = await methodChannel.invokeMethod('getBatteryInfo');
+      final converted = OhosBatteryInfo.fromJson(Map.from(batteryInfo));
+      return converted;
+    } on PlatformException catch (e) {
+      print(e.message);
+      return null;
+    }
+  }
+
+  /// Returns a stream of [OhosBatteryInfo] data that is pushed out to the
+  /// subscribers on updates
+  Stream<OhosBatteryInfo?> get ohosBatteryInfoStream {
+    return streamChannel.receiveBroadcastStream().map((data) {
+      try {
+        final converted = OhosBatteryInfo.fromJson(Map.from(data));
         return converted;
       } on PlatformException catch (e) {
         print(e.message);
